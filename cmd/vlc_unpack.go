@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	"arhiver/lib/vlc"
-	"github.com/spf13/cobra"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"arhiver/lib/vlc"
+	"github.com/spf13/cobra"
 )
 
 // TODO: take extension from file
@@ -36,7 +37,7 @@ func unpack(_ *cobra.Command, args []string) {
 		log.Fatalf("failed to io.ReadAll due error: %v", err)
 	}
 
-	packed := vlc.Decode(string(data))
+	packed := vlc.Decode(data)
 	err = os.WriteFile(unpackedFileName(filePath), []byte(packed), 0644)
 	if err != nil {
 		log.Fatalf("failed to WriteFile, %s due error: %v", filePath, err)

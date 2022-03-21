@@ -38,7 +38,6 @@ func (dt *DecodingTree) Add(code string, value rune) {
 
 func (dt *DecodingTree) Decode(str string) string {
 	var buf strings.Builder
-
 	currNode := dt
 
 	for _, ch := range str {

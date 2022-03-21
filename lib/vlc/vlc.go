@@ -7,12 +7,9 @@ import (
 	"unicode/utf8"
 )
 
-const (
-	chunksSize         = 8
-	hexChunksSeparator = " "
-)
+const chunksSize = 8
 
-func Encode(str string) string {
+func Encode(str string) []byte {
 	// prepare text: M ->!m
 	str = prepareText(str)
 
@@ -21,7 +18,7 @@ func Encode(str string) string {
 	chunks := splitByChunks(encodeBin(str), chunksSize)
 
 	// bytes to HEX -> '20 30 3C'
-	return chunks.ToHex().ToString()
+	return chunks.Bytes()
 }
 
 // splitByChunks splits binary string by chunks with given size
@@ -124,10 +121,10 @@ func getEncodingTable() encodingTable {
 		'z': "000000000000",
 	}
 }
-func Decode(encodedText string) string {
+func Decode(encodedData []byte) string {
 	// hex chunks -> binary chunks
 	// bChunks -> binary string
-	bString := NewHexChunks(encodedText).ToBinary().Join()
+	bString := NewBinChunks(encodedData).Join()
 
 	// build decoding tree
 	dTree := getEncodingTable().DecodingTree()
