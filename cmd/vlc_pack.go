@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"arhiver/lib/vlc"
 	"errors"
 	"io"
 	"log"
@@ -9,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/Striker87/archiver/lib/vlc"
 	"github.com/spf13/cobra"
 )
 

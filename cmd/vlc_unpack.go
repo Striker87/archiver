@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"arhiver/lib/vlc"
+	"github.com/Striker87/archiver/lib/vlc"
 	"github.com/spf13/cobra"
 )
 

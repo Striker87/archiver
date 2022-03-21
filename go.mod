@@ -1,4 +1,4 @@
-module arhiver
+module github.com/Striker87/archiver
 
 go 1.18
 
