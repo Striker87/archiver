@@ -9,7 +9,13 @@ import (
 
 const chunksSize = 8
 
-func Encode(str string) []byte {
+type EncoderDecoder struct{}
+
+func New() EncoderDecoder {
+	return EncoderDecoder{}
+}
+
+func (_ EncoderDecoder) Encode(str string) []byte {
 	// prepare text: M ->!m
 	str = prepareText(str)
 
@@ -19,6 +25,18 @@ func Encode(str string) []byte {
 
 	// bytes to HEX -> '20 30 3C'
 	return chunks.Bytes()
+}
+
+func (_ EncoderDecoder) Decode(encodedData []byte) string {
+	// hex chunks -> binary chunks
+	// bChunks -> binary string
+	bString := NewBinChunks(encodedData).Join()
+
+	// build decoding tree
+	dTree := getEncodingTable().DecodingTree()
+
+	// bString (dTree) -> text
+	return exportText(dTree.Decode(bString)) // My name id Ted -> !my name is !ted
 }
 
 // splitByChunks splits binary string by chunks with given size
@@ -120,17 +138,6 @@ func getEncodingTable() encodingTable {
 		'x': "00000000001",
 		'z': "000000000000",
 	}
-}
-func Decode(encodedData []byte) string {
-	// hex chunks -> binary chunks
-	// bChunks -> binary string
-	bString := NewBinChunks(encodedData).Join()
-
-	// build decoding tree
-	dTree := getEncodingTable().DecodingTree()
-
-	// bString (dTree) -> text
-	return exportText(dTree.Decode(bString)) // My name id Ted -> !my name is !ted
 }
 
 // exportText is opposite to prepareText, it prepares decoded text to export
